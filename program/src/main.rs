@@ -8,38 +8,26 @@
 #![no_main]
 sp1_zkvm::entrypoint!(main);
 
-use alloy_sol_types::{sol, SolType};
-
-/// The public values encoded as a tuple that can be easily deserialized inside Solidity.
-type PublicValuesTuple = sol! {
-    tuple(uint32, uint32, uint32)
+use zeth_lib::{
+    builder::{BlockBuilderStrategy, OptimismStrategy},
+    consts::OP_MAINNET_CHAIN_SPEC,
+    input::BlockBuildInput,
 };
+use zeth_primitives::transactions::optimism::OptimismTxEssence;
 
 pub fn main() {
     // Read an input to the program.
     //
     // Behind the scenes, this compiles down to a custom system call which handles reading inputs
     // from the prover.
-    let n = sp1_zkvm::io::read::<u32>();
+    let op_block_input = sp1_zkvm::io::read::<BlockBuildInput<OptimismTxEssence>>();
 
-    // Compute the n'th fibonacci number, using normal Rust code.
-    let mut a = 0u32;
-    let mut b = 1u32;
-    for _ in 0..n {
-        let mut c = a + b;
-        c %= 7919;
-        a = b;
-        b = c;
-    }
-
-    // Encocde the public values of the program.
-    let bytes = PublicValuesTuple::abi_encode(&(n, a, b));
+    // Build the resulting block.
+    let output = OptimismStrategy::build_from(&OP_MAINNET_CHAIN_SPEC, op_block_input.clone())
+        .expect("Failed to build the resulting block")
+        .with_state_hashed();
 
     // Commit to the public values of the program.
-    sp1_zkvm::io::commit_slice(&bytes);
-
-    // Print out the public values.
-    println!("n: {}", n);
-    println!("a: {}", a);
-    println!("b: {}", b);
+    sp1_zkvm::io::commit(&op_block_input);
+    sp1_zkvm::io::commit(&output);
 }
