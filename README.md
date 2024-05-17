@@ -17,7 +17,7 @@ RUST_LOG=info cargo run --package zeth-script --bin prove --release
 
 ## Export Solidity Verifier
 ```
-RUST_LOG=info cargo run -p fibonacci-script --bin artifacts --release
+RUST_LOG=info cargo run -p zeth-script --bin artifacts --release
 ```
 
 ## Solidity Proof Verification
