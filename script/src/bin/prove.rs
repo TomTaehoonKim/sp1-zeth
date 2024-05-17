@@ -82,4 +82,14 @@ fn main() {
         serde_json::to_string_pretty(&fixture).unwrap(),
     )
     .expect("failed to write fixture");
+
+    // Verify proof.
+    client
+        .verify_groth16(&proof, &vk)
+        .expect("verification failed");
+
+    // Save proof.
+    proof
+        .save("proof-with-io.json")
+        .expect("saving proof failed");
 }
