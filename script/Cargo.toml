@@ -12,7 +12,8 @@ name = "artifacts"
 path = "src/bin/artifacts.rs"
 
 [dependencies]
-sp1-sdk = { git = "https://github.com/succinctlabs/sp1.git", rev = "v1.0.0-testnet" }
+ethers = { version = "2.0.14", features = ["optimism"] }
+sp1-sdk = { git = "https://github.com/succinctlabs/sp1.git", rev = "v1.0.8-testnet" }
 serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
 serde = { version = "1.0", default-features = false, features = ["derive"] }
 tracing = "0.1.40"

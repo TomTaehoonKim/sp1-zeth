@@ -48,7 +48,7 @@ fn main() {
 
     // Generate the proof.
     let proof = client
-        .prove_groth16(&pk, stdin)
+        .prove_plonk(&pk, stdin)
         .expect("failed to generate proof");
 
     // Create the testing fixture so we can test things end-to-end.
@@ -85,7 +85,7 @@ fn main() {
 
     // Verify proof.
     client
-        .verify_groth16(&proof, &vk)
+        .verify_plonk(&proof, &vk)
         .expect("verification failed");
 
     // Save proof.
