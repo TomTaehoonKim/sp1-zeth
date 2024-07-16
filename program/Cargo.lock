@@ -746,16 +746,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "fibonacci-program"
-version = "0.1.0"
-dependencies = [
- "alloy-sol-types",
- "sp1-zkvm",
- "zeth-lib",
- "zeth-primitives",
-]
-
-[[package]]
 name = "fixed-hash"
 version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2396,4 +2386,14 @@ dependencies = [
  "serde",
  "sha3",
  "thiserror",
+]
+
+[[package]]
+name = "zeth-program"
+version = "0.1.0"
+dependencies = [
+ "alloy-sol-types",
+ "sp1-zkvm",
+ "zeth-lib",
+ "zeth-primitives",
 ]
